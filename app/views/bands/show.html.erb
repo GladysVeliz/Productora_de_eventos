@@ -1,3 +1,4 @@
+<div class="container">
 <p id="notice"><%= notice %></p>
 
 <p>
@@ -20,5 +21,21 @@
   <%= @band.band_type %>
 </p>
 
+<p>
+  <strong>Conciertos de este mes:</strong>
+  <%= @band.this_month_concerts %>
+</p>
+
+<p>
+  <strong>Último Concierto:</strong>
+  <%= @band.last_concert.date %>
+</p>
+
+<p>
+  <strong>Concierto mas popular:</strong>
+  <%= @band.most_popular_concert %>
+</p>
+
 <%= link_to 'Edit', edit_band_path(@band) %> |
 <%= link_to 'Back', bands_path %>
+</div>
