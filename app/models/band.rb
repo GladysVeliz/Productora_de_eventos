@@ -2,6 +2,10 @@ class Band < ApplicationRecord
     has_many :concerts, dependent: :destroy
     has_many :crews, dependent: :destroy
 
+    accepts_nested_attributes_for :crews, 
+                                allow_destroy: true, 
+                                reject_if: proc { |attributes| attributes[:name].blank? || attributes[:instrument].blank? } 
+
     enum band_type: %i[band girl_band boy_band]
 
     def all_assistants
@@ -17,7 +21,8 @@ class Band < ApplicationRecord
     end 
 
     def last_concert_date
-        self.last_concerts.date.strftime("%A %d-%B-%Y")
+         self.last_concert && self.last_concert.date.strftime("%A %d-%B-%Y")
+
     end 
 
     def most_popular_concert
@@ -26,5 +31,9 @@ class Band < ApplicationRecord
 
     def longest_concert
         self.concerts.maximum(:duration)
+    end
+
+    def members_names
+        self.crews.pluck(:name).join(', ')
     end
 end
